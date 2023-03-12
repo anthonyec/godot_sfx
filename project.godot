@@ -1,0 +1,22 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="230312_godot_sfx_plugin"
+config/features=PackedStringArray("4.0", "Forward Plus")
+
+[autoload]
+
+SFX="*res://addons/anthonyec.sfx/sfx.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/sfx/plugin.cfg", "res://addons/anthonyec.sfx/plugin.cfg")
