@@ -8,9 +8,13 @@
 
 config_version=5
 
+[addons]
+
+sfx/sounds="res://audio"
+
 [application]
 
-config/name="230312_godot_sfx_plugin"
+config/name="SFX Demo"
 config/features=PackedStringArray("4.0", "Forward Plus")
 
 [autoload]
@@ -19,4 +23,4 @@ SFX="*res://addons/anthonyec.sfx/sfx.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/sfx/plugin.cfg", "res://addons/anthonyec.sfx/plugin.cfg")
+enabled=PackedStringArray("res://addons/anthonyec.sfx/plugin.cfg")

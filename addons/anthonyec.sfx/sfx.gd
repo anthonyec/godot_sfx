@@ -4,23 +4,10 @@ const RANDOM_NUMBER_PLACEHOLDER = "[%n]"
 
 var number_suffix_regex: RegEx = null
 var is_loaded: bool = false
+
+# Where all the sounds are stored, with the name as their key and their loaded
+# resource as value.
 var sounds: Dictionary = {}
-
-# TODO: Add all the audio params here.
-class Parameters extends RefCounted:
-	# General params
-	var bus: String = "Master"
-	var volume_db: float = 0
-	var pitch_scale: float = 1
-	var loop: bool = false # Custom param
-
-	# 3D only params
-	var attenuation_filter_cutoff_hz: int = 20500
-	var max_db: float = 0
-	var max_distance: float = 30
-
-	# 2D only params
-	var max_polyphony: int = 1
 
 func _ready() -> void:
 	var sounds_directory = ProjectSettings.get_setting("addons/sfx/sounds")
@@ -34,15 +21,15 @@ func _ready() -> void:
 
 	var sound_files: Array[String] = []
 
-	sound_files.append_array(get_files_with_extension(sounds_directory, ".wav"))
-	sound_files.append_array(get_files_with_extension(sounds_directory, ".mp3"))
-	sound_files.append_array(get_files_with_extension(sounds_directory, ".ogg"))
+	sound_files.append_array(_get_files_with_extension(sounds_directory, ".wav"))
+	sound_files.append_array(_get_files_with_extension(sounds_directory, ".mp3"))
+	sound_files.append_array(_get_files_with_extension(sounds_directory, ".ogg"))
 
 	if sound_files.is_empty():
 		push_warning("SFX: No sound files were found inside " + sounds_directory)
 		return
 
-	sounds = build_sound_library_from_files(sounds_directory, sound_files)
+	sounds = _build_sound_library_from_files(sounds_directory, sound_files)
 	is_loaded = true
 
 func create_player_3d(sound_name: String, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer3D:
@@ -54,11 +41,12 @@ func create_player_3d(sound_name: String, parameters: Parameters = Parameters.ne
 		push_error("SFX: The sound called '", sound_name, "' is a collection of sounds. Access them by using the '" + RANDOM_NUMBER_PLACEHOLDER + "' suffix.")
 		return AudioStreamPlayer3D.new()
 
-	var file = get_sound_file(sound_name)
-	var player: AudioStreamPlayer3D = spawn_player(file, parameters)
+	var file = _get_sound_file(sound_name)
+	var player: AudioStreamPlayer3D = _spawn_player(file, parameters)
 
 	return player
 
+# Plays a sound at a specfic location in the scene.
 func play_at_location(sound_name: String, location: Vector3, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer3D:
 	var player = create_player_3d(sound_name, parameters)
 
@@ -68,6 +56,7 @@ func play_at_location(sound_name: String, location: Vector3, parameters: Paramet
 
 	return player
 
+# Plays a sound attached as a child to a node in the scene.
 func play_attached_to_node(sound_name: String, node: Node3D, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer3D:
 	var player = create_player_3d(sound_name, parameters)
 
@@ -76,12 +65,14 @@ func play_attached_to_node(sound_name: String, node: Node3D, parameters: Paramet
 
 	return player
 
+# Plays a non-spatial sound in the scene which is not affected by process mode.
+# This is good for UI noises as it will still work when the game is paused.
 func play_everywhere(sound_name: String, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer2D:
 	if !sounds.has(sound_name.trim_suffix(RANDOM_NUMBER_PLACEHOLDER)):
 		push_error("SFX: The sound called '", sound_name, "' does not exist.")
 		return AudioStreamPlayer2D.new()
 
-	var sound_file = get_sound_file(sound_name)
+	var sound_file = _get_sound_file(sound_name)
 	var player: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
 
 	var _signal = player.connect("finished", func(): player.queue_free())
@@ -98,7 +89,7 @@ func play_everywhere(sound_name: String, parameters: Parameters = Parameters.new
 
 	return player
 
-func spawn_player(stream: AudioStream, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer3D:
+func _spawn_player(stream: AudioStream, parameters: Parameters = Parameters.new()) -> AudioStreamPlayer3D:
 	var player: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	var timer: SceneTreeTimer = get_tree().create_timer(float(stream.get_length()), false)
 
@@ -112,14 +103,14 @@ func spawn_player(stream: AudioStream, parameters: Parameters = Parameters.new()
 
 	# TODO: Loop seems to be broken. Fix it one day.
 	if parameters.loop:
-		var _signal = timer.connect("timeout", on_timer_end.bind(player))
+		var _signal = timer.connect("timeout", _on_timer_end.bind(player))
 
 	return player
 
-func on_timer_end(player: AudioStreamPlayer3D) -> void:
+func _on_timer_end(player: AudioStreamPlayer3D) -> void:
 	player.queue_free()
 
-func get_sound_file(sound_name: String) -> AudioStream:
+func _get_sound_file(sound_name: String) -> AudioStream:
 	var file: AudioStream = null
 
 	if sound_name.ends_with(RANDOM_NUMBER_PLACEHOLDER):
@@ -133,7 +124,7 @@ func get_sound_file(sound_name: String) -> AudioStream:
 
 	return file
 
-func build_sound_library_from_files(sounds_directory: String, sound_files: Array[String]) -> Dictionary:
+func _build_sound_library_from_files(sounds_directory: String, sound_files: Array[String]) -> Dictionary:
 	var collection: Dictionary = {}
 
 	for sound_file in sound_files:
@@ -158,7 +149,7 @@ func build_sound_library_from_files(sounds_directory: String, sound_files: Array
 	return collection
 
 # Perform a recursive scan of a directory and return all the files of a certain type.
-func get_files_with_extension(path: String, file_extension: String) -> Array[String]:
+func _get_files_with_extension(path: String, file_extension: String) -> Array[String]:
 	var directory = DirAccess.open(path)
 
 	if directory == null:
@@ -172,7 +163,7 @@ func get_files_with_extension(path: String, file_extension: String) -> Array[Str
 
 	while file_name != "":
 		if directory.current_is_dir():
-			var recursive_results = get_files_with_extension(path + "/" + file_name, file_extension)
+			var recursive_results = _get_files_with_extension(path + "/" + file_name, file_extension)
 			results.append_array(recursive_results)
 
 		if not directory.current_is_dir():
@@ -187,3 +178,19 @@ func get_files_with_extension(path: String, file_extension: String) -> Array[Str
 		file_name = directory.get_next()
 
 	return results
+
+# TODO: Add all the audio params here.
+class Parameters extends RefCounted:
+	# General params
+	var bus: String = "Master"
+	var volume_db: float = 0
+	var pitch_scale: float = 1
+	var loop: bool = false # Custom param
+
+	# 3D only params
+	var attenuation_filter_cutoff_hz: int = 20500
+	var max_db: float = 0
+	var max_distance: float = 30
+
+	# 2D only params
+	var max_polyphony: int = 1

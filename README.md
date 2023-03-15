@@ -27,7 +27,7 @@ SFX.play_at_location("water_splash", Vector3(10, 20, 30))
 # Play a sound at attached to a node
 SFX.play_attached_to_node("footstep", player)
 
-# Play a non-spatial sound
+# Play a non-spatial sound that is not affected by process mode
 SFX.play_everywhere("ui_select")
 ```
 
