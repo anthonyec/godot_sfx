@@ -51,8 +51,10 @@ SFX.play_attached_to_node("footstep_[%n]", player)
 
 ## Sound credits
 
-| Name | Author | Link |
-|---|---|---|
-| chime.wav | | 582649__ironcross32__long-rising-tones-14.wav|
-| wobble.wav | | 268613__breo2012__pulse-bass.wav |
-| dirt_1.wav | | 533044__nox-sound__footsteps-boots-wood.wav |
+| Name | Link |
+|---|---|
+| chime.wav | [582649__ironcross32__long-rising-tones-14.wav](https://freesound.org/people/ironcross32/sounds/582649/) |
+| wobble.wav | [268613__breo2012__pulse-bass.wav](https://freesound.org/people/breo2012/sounds/268613/) |
+| boot_1.wav | [533044__nox-sound__footsteps-boots-wood.wav](https://freesound.org/people/Nox_Sound/sounds/533044/) |
+| boot_2.wav | [533044__nox-sound__footsteps-boots-wood.wav](https://freesound.org/people/Nox_Sound/sounds/533044/) |
+| boot_3.wav | [533044__nox-sound__footsteps-boots-wood.wav](https://freesound.org/people/Nox_Sound/sounds/533044/) |
