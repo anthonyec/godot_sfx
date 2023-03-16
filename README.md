@@ -48,3 +48,11 @@ Then when playing the sound, replace the number in the sound name with `[%n]`:
 ```gdscript
 SFX.play_attached_to_node("footstep_[%n]", player)
 ```
+
+## Sound credits
+
+| Name | Author | Link |
+|---|---|---|
+| chime.wav | | 582649__ironcross32__long-rising-tones-14.wav|
+| wobble.wav | | 268613__breo2012__pulse-bass.wav |
+| dirt_1.wav | | 533044__nox-sound__footsteps-boots-wood.wav |

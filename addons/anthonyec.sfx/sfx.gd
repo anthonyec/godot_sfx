@@ -101,10 +101,6 @@ func _spawn_player(stream: AudioStream, parameters: Parameters = Parameters.new(
 	player.max_distance = parameters.max_distance
 	player.pitch_scale = parameters.pitch_scale
 
-	# TODO: Loop seems to be broken. Fix it one day.
-	if parameters.loop:
-		var _signal = timer.connect("timeout", _on_timer_end.bind(player))
-
 	return player
 
 func _on_timer_end(player: AudioStreamPlayer3D) -> void:
@@ -121,7 +117,7 @@ func _get_sound_file(sound_name: String) -> AudioStream:
 		file = sounds[sound_collection_name][random_index] as AudioStream
 	else:
 		file = sounds[sound_name] as AudioStream
-
+	
 	return file
 
 func _build_sound_library_from_files(sounds_directory: String, sound_files: Array[String]) -> Dictionary:
@@ -185,7 +181,6 @@ class Parameters extends RefCounted:
 	var bus: String = "Master"
 	var volume_db: float = 0
 	var pitch_scale: float = 1
-	var loop: bool = false # Custom param
 
 	# 3D only params
 	var attenuation_filter_cutoff_hz: int = 20500
