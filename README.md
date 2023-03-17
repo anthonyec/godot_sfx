@@ -32,7 +32,7 @@ SFX.play_everywhere("ui_select")
 ```
 
 ### Random sounds
-If you include sounds with file names that end with numbers, `SFX` will randomly
+If you include sounds with file names that end with numbers, `SFX` can randomly
 choose one and play it.
 
 For example, in my sounds directory I include the following files:
@@ -47,6 +47,12 @@ Then when playing the sound, replace the number in the sound name with `[%n]`:
 
 ```gdscript
 SFX.play_attached_to_node("footstep_[%n]", player)
+```
+
+And you can still play a specfic sound if needed:
+
+```gdscript
+SFX.play_attached_to_node("footstep_2", player)
 ```
 
 ## Demo
