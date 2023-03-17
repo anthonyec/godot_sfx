@@ -49,7 +49,11 @@ Then when playing the sound, replace the number in the sound name with `[%n]`:
 SFX.play_attached_to_node("footstep_[%n]", player)
 ```
 
-## Sound credits
+## Demo
+
+[Download demo project](#)
+
+### Credits
 
 | Name | Link |
 |---|---|
