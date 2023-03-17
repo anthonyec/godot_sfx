@@ -49,12 +49,6 @@ Then when playing the sound, replace the number in the sound name with `[%n]`:
 SFX.play_attached_to_node("footstep_[%n]", player)
 ```
 
-And you can still play a specfic sound if needed:
-
-```gdscript
-SFX.play_attached_to_node("footstep_2", player)
-```
-
 ## Demo
 
 [Download demo project](#)
