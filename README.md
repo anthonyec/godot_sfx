@@ -4,6 +4,8 @@
   <img src="logo.png" width="195" alt="SFX">
 </div>
 
+⚠️ I haven't officially "released" this yet, so some thing may change a lot.
+
 ## Installation
 - Install the plugin in the Addons folder
 - Enable it in `Project Settings > Addons`
