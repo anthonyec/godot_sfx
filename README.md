@@ -1,10 +1,10 @@
-# SFX Plugin for Godot
+<img src="logo.png" width="125">
 
-<div align="center">
-  <img src="logo.png" width="195" alt="SFX">
-</div>
+# SFX
 
 ## Installation
+
+- Use Godot 4+
 - Install the plugin in the Addons folder
 - Enable it in `Project Settings > Addons`
 
