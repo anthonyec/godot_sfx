@@ -2,6 +2,8 @@
 
 # SFX
 
+⚠️ I haven't officially "released" this yet, so some things may change a lot.
+
 ## Installation
 
 - Use Godot 4+
@@ -32,7 +34,7 @@ SFX.play_everywhere("ui_select")
 ```
 
 ### Random sounds
-If you include sounds with file names that end with numbers, `SFX` will randomly
+If you include sounds with file names that end with numbers, `SFX` can randomly
 choose one and play it.
 
 For example, in my sounds directory I include the following files:
@@ -49,7 +51,11 @@ Then when playing the sound, replace the number in the sound name with `[%n]`:
 SFX.play_attached_to_node("footstep_[%n]", player)
 ```
 
-## Sound credits
+## Demo
+
+[Download demo project](#)
+
+### Credits
 
 | Name | Link |
 |---|---|
